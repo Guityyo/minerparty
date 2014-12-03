@@ -73,11 +73,11 @@ public class Miner : MonoBehaviour {
 
 
 	public void Drinking(int amount){
-		if (GoldCarried > 0) {
+		if (GoldCarried >= Saloon.getBeerPrice()) {
 			Thirst -= amount;
 			if (Thirst < 0) Thirst = 0;
 			BathroomNeed += amount / 2;
-			GoldCarried --;
+			GoldCarried -= Saloon.getBeerPrice();
 		}
 	}
 	
