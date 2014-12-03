@@ -27,9 +27,7 @@ public class Thief : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		GameObject mine = GameObject.Find("Mine");
-		if (perspective.IsWithinViewfield (mine))
-						Debug.Log ("jippie!");
+
 	}
 
 	// Method to check if the Thief has arrived to the target
