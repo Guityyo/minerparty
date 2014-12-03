@@ -10,17 +10,15 @@ public class isNotAtSaloon : RAINAction
 	private Thief thief;
 	private GameObject saloon;
 	
-	public override void Start(RAIN.Core.AI ai)
-	{
+	public override void Start(RAIN.Core.AI ai) {
 		base.Start(ai);
-		thief = GameObject.Find("Thief").GetComponent(Thief);
-		saloon = GameObject.Find ("SaloonIdle");
+		thief = GameObject.Find("Thief").GetComponent<Thief>();
+		saloon = GameObject.Find("SaloonIdle");
 	}
 	
-	public override ActionResult Execute(RAIN.Core.AI ai)
-	{
+	public override ActionResult Execute(RAIN.Core.AI ai){
 		
-		if (thief.isAt (saloon)) {
+		if (thief.isAt(saloon)) {
 			thief.disableSteering();
 			return ActionResult.SUCCESS;
 		}

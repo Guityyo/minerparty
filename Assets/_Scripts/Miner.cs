@@ -68,7 +68,7 @@ public class Miner : MonoBehaviour {
 
 	public bool IsAt(GameObject target) {
 		Vector3 targetPos = target.transform.position;
-		return Vector3.Distance (minerCurrPos, minerTargetPos) <= 1.0;
+		return Vector3.Distance (minerCurrPos, targetPos) <= 1.0;
 	}
 
 

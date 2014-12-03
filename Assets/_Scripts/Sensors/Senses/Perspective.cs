@@ -6,13 +6,12 @@ public class Perspective : Sense
     public int FieldOfView = 45;
     public int ViewDistance = 100;
 
-    private Transform playerTrans, mineTrans;
+    private Transform playerTrans;
     private Vector3 rayDirection;
 
     protected override void Initialise() 
     {
         playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
-		mineTrans = GameObject.Find ("Mine").transform;
     }
 
 	// Update is called once per frame

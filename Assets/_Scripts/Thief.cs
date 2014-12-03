@@ -10,15 +10,17 @@ public class Thief : MonoBehaviour {
 	public Vector3 thiefTargetPos = new Vector3 ();
 	public GameObject thiefTarget;
 	public int GoldCarried = 0;
+	private Miner minerScript;
 
 	private Vector3 dir;
 	//TODO add to avoid obstacles ??
 
 	// Use this for initialization
 	void Start () {
-		perspective = gameObject.GetComponent (Perspective);
+		perspective = gameObject.GetComponent<Perspective>();
 		thiefSteering = GetComponent<SteerToFollow> ();
 		animator = GetComponent<Animator> ();
+		minerScript = GameObject.Find("Miner").GetComponent<Miner>();
 
 		thiefCurrPos = transform.position;
 	}
@@ -36,12 +38,11 @@ public class Thief : MonoBehaviour {
 	}
 
 	// To set the target of the steering behaviour
-	public void setTarget(string newTarget){
-		if(thiefTarget!=newTarget) {
+	public void setTarget(GameObject newTarget){
+		if (thiefTarget != newTarget) {
 		thiefSteering = GetComponent<SteerToFollow> ();
 		animator = GetComponent<Animator> ();
 		
-		thiefTarget = GameObject.Find(newTarget);
 		thiefSteering.Target = thiefTarget.transform;
 		
 		thiefTargetPos = thiefSteering.Target.transform.position;
@@ -54,7 +55,7 @@ public class Thief : MonoBehaviour {
 	// Enable steering behaviour
 	public void enableSteering(int vel){
 		thiefSteering.enabled = true;
-		animator.SetInteger ("speed", 200);
+		animator.SetInteger ("speed", vel);
 	}
 	
 	// Disable steering behaviour
@@ -70,6 +71,14 @@ public class Thief : MonoBehaviour {
 	// To check if steering is enabled
 	public bool isSteeringEnabled(){
 		return thiefSteering.enabled;
+	}
+
+	public void stealMoneyFromMiner() {
+		int goldToSteal = minerScript.GoldCarried;
+		minerScript.GoldCarried -= goldToSteal;
+		GoldCarried += goldToSteal;
+
+		Debug.Log("Thief: I'm soo good, I just stole " + goldToSteal + " gold!");
 	}
 }
 
