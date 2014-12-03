@@ -7,18 +7,18 @@ using RAIN.Core;
 [RAINAction]
 public class drinkAlone : RAINAction
 {
-    public override void Start(RAIN.Core.AI ai)
-    {
+	private Thief thief;
+    public override void Start(RAIN.Core.AI ai){
         base.Start(ai);
+		thief = GameObject.Find("Thief").GetComponent<Thief>();
     }
 
-    public override ActionResult Execute(RAIN.Core.AI ai)
-    {
+    public override ActionResult Execute(RAIN.Core.AI ai){
+		thief.drinkBeer();
         return ActionResult.SUCCESS;
     }
 
-    public override void Stop(RAIN.Core.AI ai)
-    {
+    public override void Stop(RAIN.Core.AI ai){
         base.Stop(ai);
     }
 }
