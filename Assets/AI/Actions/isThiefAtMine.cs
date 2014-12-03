@@ -11,17 +11,14 @@ public class isThiefAtMine : RAINAction
 	private Thief thief;
 	private GameObject mine;
 
-    public override void Start(RAIN.Core.AI ai)
-    {
+    public override void Start(RAIN.Core.AI ai) {
         base.Start(ai);
-		thief = GameObject.Find("Thief").GetComponent(Thief);
+		thief = GameObject.Find("Thief").GetComponent<Thief>();
 		mine = GameObject.Find ("MineIdle");
     }
 
-    public override ActionResult Execute(RAIN.Core.AI ai)
-    {
-
-		if (thief.isAt (mine)) {
+    public override ActionResult Execute(RAIN.Core.AI ai) {
+		if (thief.isAt(mine)) {
 			thief.disableSteering();
 			return ActionResult.SUCCESS;
 		}
