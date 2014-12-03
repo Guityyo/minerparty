@@ -80,5 +80,9 @@ public class Thief : MonoBehaviour {
 
 		Debug.Log("Thief: I'm soo good, I just stole " + goldToSteal + " gold!");
 	}
+
+	public void drinkBeer(){
+		GoldCarried -= Saloon.getBeerPrice();
+	}
 }
 
