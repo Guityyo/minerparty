@@ -20,10 +20,10 @@ public class isThiefAtMine : RAINAction
     public override ActionResult Execute(RAIN.Core.AI ai) {
 		if (thief.isAt(mine)) {
 			thief.disableSteering();
-			return ActionResult.SUCCESS;
+			return ActionResult.FAILURE;
 		}
-
-		return ActionResult.FAILURE;
+		Debug.Log ("THIEF: I should probably head to the mine then...");
+		return ActionResult.SUCCESS;
     }
 
     public override void Stop(RAIN.Core.AI ai)

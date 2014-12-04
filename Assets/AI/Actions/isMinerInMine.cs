@@ -13,11 +13,15 @@ public class isMinerInMine : RAINAction
     public override void Start(RAIN.Core.AI ai) {  
 		base.Start(ai);
 		miner = GameObject.Find ("Miner").GetComponent<Miner>();
-		mine = GameObject.Find ("Mine");
+		mine = GameObject.Find ("MineIdle");
     }
 
     public override ActionResult Execute(RAIN.Core.AI ai) {
-		return miner.IsAt(mine) ? ActionResult.SUCCESS : ActionResult.FAILURE;
+		if (miner.IsAt (mine)) {
+			Debug.Log("THIEF: The miner is now in the mine... I can go there too!");
+			return ActionResult.SUCCESS;
+		}
+		return  ActionResult.FAILURE;
     }
 
     public override void Stop(RAIN.Core.AI ai) {
