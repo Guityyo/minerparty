@@ -15,6 +15,7 @@ public class drinkAlone : RAINAction
 
     public override ActionResult Execute(RAIN.Core.AI ai){
 		thief.drinkBeer();
+		Debug.Log ("THIEF: Mmmm this beer is sooo tasty");
         return ActionResult.SUCCESS;
     }
 
