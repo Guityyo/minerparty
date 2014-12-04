@@ -51,11 +51,11 @@ public class Miner : MonoBehaviour {
 	}
 	
 	public bool IsRichEnough() {
-		return MoneyInBank > 1000;
+		return MoneyInBank > 10000;
 	}
 	
 	public bool HasPocketsFull() {
-		return GoldCarried >=  250;
+		return GoldCarried >=  5000; 
 	}
 	
 	public bool IsThirsty() {
@@ -86,7 +86,7 @@ public class Miner : MonoBehaviour {
 	}
 
 	public bool IsExhausted() {
-		return Fatigue >= 250;
+		return Fatigue >= 2000;
 	}
 
 	// Method to check if the Miner has arrived to the target
@@ -116,17 +116,17 @@ public class Miner : MonoBehaviour {
 		HUD = GameObject.Find ("HUD");
 		hudController = HUD.GetComponent<HudController>();
 
-//		Debug.Log ("Miner awakes...");
 		say ("I'm awaking...");
 
 		FSM = new FiniteStateMachine<Miner>();
 		FSM.Configure(this, GoHomeSleep.Instance);
 
-		minerSteering = GetComponent<SteerToFollow> ();
 		animator = GetComponent<Animator> ();
 
+		//minerSteering = GetComponent<SteerToFollow> ();
+
 		//set the target
-		minerSteering.Target = minerTarget.transform;
+		//minerSteering.Target = minerTarget.transform;
 
 		//enabling steering
 		enableSteering(5);
@@ -152,7 +152,6 @@ public class Miner : MonoBehaviour {
 			dir.Normalize();
 			AvoidObstacles (ref dir);	
 
-//			if (IsDarkOutside()) ChangeState(GoHomeSleep.Instance); // Just call ChangeState if not in state already -> call from another state
 		}
 	}
 
@@ -160,7 +159,6 @@ public class Miner : MonoBehaviour {
 	public void ChangeTargetLocation(Locations l) {
 		TargetLocation = l;
 
-//		Debug.Log ("Changing target location to " + l + "...");
 		say ("Next stop: " + l + "!");
 
 		if( minerSteering != null){
@@ -171,7 +169,6 @@ public class Miner : MonoBehaviour {
 	// To set the target of the steering behaviour
 	public void setTarget(string newTarget){
 		minerSteering = GetComponent<SteerToFollow> ();
-		animator = GetComponent<Animator> ();
 
 		minerTarget = GameObject.Find(newTarget);
 		minerSteering.Target = minerTarget.transform;
@@ -216,7 +213,6 @@ public class Miner : MonoBehaviour {
 		//Check that the character hit with the obstacles within its minimum distance to avoid
 		if (Physics.Raycast(transform.position, transform.forward, out hit, minimumDistToAvoid, layerMask))
 		{
-//			Debug.Log("Obstacle detected, don't wanna run into it!");
 			say("Obstacle detected, don't wanna run into it!");
 
 			//Get the normal of the hit point to calculate the new direction
