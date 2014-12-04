@@ -56,11 +56,11 @@ public class Perspective : Sense
 		if ((Vector3.Angle(rayDirection, transform.forward)) < FieldOfView) {
 			// Detect if mine is within the field of view
 			if (Physics.Raycast(transform.position, rayDirection, out hit, ViewDistance)) {
-				Debug.Log ("Mine visible!");
+				//Debug.Log ("Mine visible!");
 				return true;
 			}
 		}
-		Debug.Log ("Mine not visible :(");
+		//Debug.Log ("Mine not visible :(");
 		return false;
 	}
 
