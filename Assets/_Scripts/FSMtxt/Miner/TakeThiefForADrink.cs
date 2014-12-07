@@ -28,7 +28,7 @@ public sealed class TakeThiefForADrink :  FSMState<Miner> {
 			if (m.IsDarkOutside()) {
 				m.ChangeState(GoHomeSleep.Instance);
 			} else if (m.Thirst <= 0 || m.GoldCarried <= 0) {
-				m.ChangeState (EnterMineDigForGold.Instance);
+				m.ChangeState (ChaseThief.Instance);
 			}
 		}
 	}

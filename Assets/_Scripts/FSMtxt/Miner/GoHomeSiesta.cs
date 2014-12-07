@@ -27,7 +27,7 @@ public sealed class GoHomeSiesta :  FSMState<Miner> {
 				m.say("Now that it's dark I might just stay in bed...");
 				m.ChangeState(GoHomeSleep.Instance);
 			} else if (m.Fatigue <= 0){
-				m.ChangeState(EnterMineDigForGold.Instance);
+				m.ChangeState(ChaseThief.Instance);
 			}
 		}
 	}

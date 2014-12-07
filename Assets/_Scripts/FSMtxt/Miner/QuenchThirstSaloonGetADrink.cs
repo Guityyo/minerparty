@@ -29,7 +29,7 @@ public sealed class QuenchThirstSaloonGetADrink :  FSMState<Miner> {
 			} else if (m.IsDarkOutside()) {
 				m.ChangeState(GoHomeSleep.Instance);
 			} else if (m.Thirst <= 0 || m.GoldCarried <= 0) {
-				m.ChangeState (EnterMineDigForGold.Instance);
+				m.ChangeState (ChaseThief.Instance);
 			}
 		}
 	}
