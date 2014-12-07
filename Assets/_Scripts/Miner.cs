@@ -6,8 +6,9 @@ public enum Locations { goldmine, bar, bank, home, tree };
 
 [RequireComponent(typeof(SteerToFollow))]
 public class Miner : MonoBehaviour {
+
 	private FiniteStateMachine<Miner> FSM;
-	
+
 	public Locations TargetLocation = Locations.home;
 	public int GoldCarried = 0;
 	public int MoneyInBank  = 0;
@@ -104,6 +105,14 @@ public class Miner : MonoBehaviour {
 		FSM.ChangeState(e);
 	}
 
+	public string GetState() {
+		return FSM.ToString();
+	}
+
+	public bool isChasing() {
+		return GetState() == ChaseThief.Instance.ToString();
+	}
+
 	public void say (string words) {
 		hudController.setMinerText (words);
 		Debug.Log ("Miner: \"" + words + "\"");
@@ -175,14 +184,14 @@ public class Miner : MonoBehaviour {
 
 		minerTargetPos = minerSteering.Target.transform.position;
 		// for obstacle avoidance
-		dir = (minerTargetPos - minerCurrPos); // directional vector to target position
-		dir.Normalize();
+		//dir = (minerTargetPos - minerCurrPos); // directional vector to target position
+		//dir.Normalize();
 	}
 
 	// Enable steering behaviour
 	public void enableSteering(int vel){
 		minerSteering.enabled = true;
-		animator.SetInteger ("speed", 200);
+		animator.SetInteger ("speed", vel);
 	}
 
 	// Disable steering behaviour

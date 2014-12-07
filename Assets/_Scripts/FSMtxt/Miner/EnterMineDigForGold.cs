@@ -7,11 +7,13 @@ public sealed class EnterMineDigForGold :  FSMState<Miner> {
 	public static EnterMineDigForGold Instance { get { return instance; } }
 	static EnterMineDigForGold() { }
 	private EnterMineDigForGold() { }
-
+	private Thief thief;
 
 
 	public override void Enter (Miner m) {
 	
+		thief = GameObject.Find("Thief").GetComponent<Thief>();
+
 		if (m.TargetLocation != Locations.goldmine) {
 			m.say("Heading to the mine...");
 			m.ChangeTargetLocation(Locations.goldmine);
@@ -27,7 +29,9 @@ public sealed class EnterMineDigForGold :  FSMState<Miner> {
 			m.say("Picking up nugget and that's " + m.GoldCarried + "...");
 			m.IncreaseFatigue ();
 
-			if (m.IsDarkOutside()) {
+			if (thief.hasStolenMoney()){
+				m.ChangeState(ChaseThief.Instance);
+			} else if (m.IsDarkOutside()) {
 				m.ChangeState(GoHomeSleep.Instance);
 			} else if (m.HasPocketsFull ()) {
 				m.ChangeState (VisitBankDepositGold.Instance);
