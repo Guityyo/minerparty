@@ -8,22 +8,24 @@ using RAIN.Core;
 public class stealGold : RAINAction
 {
 	Thief thiefScript;
-
-    public override void Start(RAIN.Core.AI ai)
-    {
-        base.Start(ai);
+	
+	public override void Start(RAIN.Core.AI ai)
+	{
+		base.Start(ai);
 		thiefScript = GameObject.Find("Thief").GetComponent<Thief>();
-    }
-
-    public override ActionResult Execute(RAIN.Core.AI ai)
-    {
+	}
+	
+	public override ActionResult Execute(RAIN.Core.AI ai)
+	{
+		Debug.Log ("THIEF: STEALING STEALING STEALING STEALING!! ");
 		thiefScript.stealMoneyFromMiner();
 		Debug.Log ("THIEF: I have gooooooooooooold!!!! :P");
-		return ActionResult.SUCCESS;
-    }
 
-    public override void Stop(RAIN.Core.AI ai)
-    {
-        base.Stop(ai);
-    }
+		return ActionResult.FAILURE;
+	}
+	
+	public override void Stop(RAIN.Core.AI ai)
+	{
+		base.Stop(ai);
+	}
 }
