@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnitySteer.Behaviors;
@@ -15,17 +15,15 @@ public class goToMine : RAINAction
 		base.Start(ai);
 		
 		thief = GameObject.Find("Thief").GetComponent<Thief>();
-		//mine = GameObject.Find("MineIdle");
-		
 	}
 	
 	public override ActionResult Execute(RAIN.Core.AI ai)
 	{
 		thief.setTarget("MineIdle");
 		if (! thief.isSteeringEnabled())
-			thief.enableSteering(200);
+			thief.enableSteering(2);
 		Debug.Log ("THIEF: Going to the mine to steal some gold...");
-		return ActionResult.SUCCESS;
+		return ActionResult.FAILURE;
 	}
 	
 	public override void Stop(RAIN.Core.AI ai)

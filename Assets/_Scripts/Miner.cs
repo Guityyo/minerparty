@@ -33,8 +33,10 @@ public class Miner : MonoBehaviour {
 	// To avoid obstacles
 	private Vector3 dir;
 	public float force = 50.0f;
-	public float minimumDistToAvoid = 2.0f;
-	
+	public float minimumDistToAvoid = 4.0f;
+
+	// Chasing thief
+	public bool chasing = false;
 	private bool gameEnded = false;
 	
 	public void AddToGoldCarried(int amount) {
@@ -81,6 +83,15 @@ public class Miner : MonoBehaviour {
 			GoldCarried -= Saloon.getBeerPrice();
 		}
 	}
+
+	public void BuyDrinks(int amount){
+		if (GoldCarried >= 2*Saloon.getBeerPrice()) {
+			Thirst -= amount;
+			if (Thirst < 0) Thirst = 0;
+			BathroomNeed += amount / 2;
+			GoldCarried -= 2*Saloon.getBeerPrice();
+		}
+	}
 	
 	public void IncreaseFatigue() {
 		Fatigue++;
@@ -91,26 +102,21 @@ public class Miner : MonoBehaviour {
 	}
 	
 	// Method to check if the Miner has arrived to the target
-	public bool IsNearTarget(){
-		return Vector3.Distance (minerCurrPos, minerTargetPos) <= 1.0;
+	public bool IsNearTarget(int dist){
+		return Vector3.Distance (minerCurrPos, minerTargetPos) <= dist;
 	}
 	
 	// Method to check if it is night
 	public bool IsDarkOutside(){
 		return mainLight.light.intensity <= 0.4;
 	}
-	
-	
+
+	// Method to check if it is chasing the thief
+	public bool IsChasing(){
+		return chasing;
+	}
 	public void ChangeState(FSMState<Miner> e) {
 		FSM.ChangeState(e);
-	}
-	
-	public string GetState() {
-		return FSM.ToString();
-	}
-	
-	public bool isChasing() {
-		return GetState() == ChaseThief.Instance.ToString();
 	}
 	
 	public void say (string words) {

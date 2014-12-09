@@ -14,8 +14,10 @@ public class isWealthyEnough : RAINAction
     }
 
     public override ActionResult Execute(RAIN.Core.AI ai){
-		if(thief.GoldCarried>= Saloon.getBeerPrice())
+		if(thief.GoldCarried>= Saloon.getBeerPrice()){
         	return ActionResult.SUCCESS;
+		}
+		thief.enableWandering ();
 		return ActionResult.FAILURE;
     }
 

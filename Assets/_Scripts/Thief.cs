@@ -2,10 +2,12 @@
 using UnitySteer.Behaviors;
 using System.Collections;
 
+[RequireComponent(typeof(SteerForEvasion))]
 [RequireComponent(typeof(SteerToFollow))]
 [RequireComponent(typeof(Wander))]
 public class Thief : MonoBehaviour {
 	Perspective perspective;
+	private SteerForEvasion thiefEvasion;
 	private SteerToFollow thiefSteering;
 	private Wander thiefWander;
 	private Animator animator;
@@ -45,7 +47,7 @@ public class Thief : MonoBehaviour {
 	
 	// Method to check if the Thief has arrived to the target
 	public bool IsNearTarget(){
-		return Vector3.Distance (thiefCurrPos, thiefTargetPos) <= 1.0;
+		return Vector3.Distance (thiefCurrPos, thiefTargetPos) <= 3.0;
 	}
 	
 	// To set the target of the steering behaviour
@@ -65,7 +67,7 @@ public class Thief : MonoBehaviour {
 	}
 	
 	// Enable steering behaviour and disable wandering behaviour
-	public void enableSteering(int vel){
+	public void enableSteering(int vel){ 
 		thiefSteering.enabled = true;
 		thiefWander.enabled = false;
 		animator.SetInteger ("speed", vel);
@@ -75,7 +77,18 @@ public class Thief : MonoBehaviour {
 	public void disableSteering(){
 		thiefWander.enabled = true;
 		thiefSteering.enabled = false;
-		animator.SetInteger ("speed", 0);
+		animator.SetInteger ("speed", 1);
+	}
+
+	// Enable wander behaviour and disable Idle animator
+	public void enableWandering(){
+		thiefWander.enabled = true;
+		animator.SetInteger ("speed", 1);
+	}
+	// Disable wander behaviour and enable Idle animator
+	public void disableWandering(){
+		thiefWander.enabled = false;
+		animator.SetInteger ("speed", 1);
 	}
 	
 	public bool isAt(GameObject location){
@@ -93,7 +106,16 @@ public class Thief : MonoBehaviour {
 		minerScript.GoldCarried -= goldToSteal;
 		GoldCarried += goldToSteal;
 		moneyStolen = true;
-		Debug.Log("THIEF: I'm soo good, I just stole " + goldToSteal + " gold!");
+		minerScript.chasing = true;
+		Debug.Log("THIEF: I'm soo good, I just stole " + GoldCarried + " gold!");
+	}
+
+	public void looseMoney() {
+		Debug.Log("THIEF: Oh no! I didn't want to steal you...");
+		int goldToSteal = GoldCarried;
+		GoldCarried -= goldToSteal;
+		minerScript.GoldCarried += goldToSteal;
+		moneyStolen = false;
 	}
 	
 	public bool hasStolenMoney(){
@@ -102,6 +124,29 @@ public class Thief : MonoBehaviour {
 	
 	public void drinkBeer(){
 		GoldCarried -= Saloon.getBeerPrice();
+	}
+
+
+	// Enable steering behaviour and disable wandering behaviour
+	public void enableEvasion(int vel){
+		thiefEvasion.enabled = true;
+		thiefWander.enabled = false;
+		animator.SetInteger ("speed", vel);
+	}
+	
+	// Disable steering behaviour and enable wandering behaviour
+	public void disableEvasion(){
+		thiefWander.enabled = true;
+		thiefEvasion.enabled = false;
+		animator.SetInteger ("speed", 0);
+	}
+
+	public void setEvasion(){
+		thiefEvasion = GetComponent<SteerForEvasion> ();
+		thiefTarget = GameObject.Find("Miner");
+		//thiefEvasion.Menace = thiefTarget.transform;
+		thiefTargetPos = thiefEvasion.Menace.transform.position;
+
 	}
 }
 

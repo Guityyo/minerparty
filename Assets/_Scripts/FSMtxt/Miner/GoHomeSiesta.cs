@@ -18,7 +18,7 @@ public sealed class GoHomeSiesta :  FSMState<Miner> {
 	}
 	
 	public override void Execute (Miner m) {
-		if (m.IsNearTarget ()){
+		if (m.IsNearTarget (1)){
 			m.say("zZzZzZz ... I like siesta... ");
 			m.disableSteering();
 			m.Fatigue--;
@@ -27,7 +27,7 @@ public sealed class GoHomeSiesta :  FSMState<Miner> {
 				m.say("Now that it's dark I might just stay in bed...");
 				m.ChangeState(GoHomeSleep.Instance);
 			} else if (m.Fatigue <= 0){
-				m.ChangeState(ChaseThief.Instance);
+				m.ChangeState(EnterMineDigForGold.Instance);
 			}
 		}
 	}

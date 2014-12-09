@@ -21,7 +21,7 @@ public class stealGold : RAINAction
 		thiefScript.stealMoneyFromMiner();
 		Debug.Log ("THIEF: I have gooooooooooooold!!!! :P");
 
-		return ActionResult.FAILURE;
+		return ActionResult.SUCCESS;
 	}
 	
 	public override void Stop(RAIN.Core.AI ai)

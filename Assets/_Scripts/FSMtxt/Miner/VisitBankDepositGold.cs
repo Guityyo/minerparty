@@ -27,7 +27,7 @@ public sealed class VisitBankDepositGold :  FSMState<Miner> {
 		//			m.ChangeState(QuenchThirstSaloon.Instance);
 		//		}
 
-		if ( m.IsNearTarget () ){
+		if ( m.IsNearTarget (1) ){
 			m.say("Feeding The System with MY gold " + m.MoneyInBank + "...");
 			m.disableSteering();
 			m.AddToMoneyInBank(25);

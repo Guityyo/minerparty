@@ -7,20 +7,21 @@ using RAIN.Core;
 [RAINAction]
 public class isMinerChasing : RAINAction
 {
-	private Miner miner;
-	
+	private Miner minerScript;
+
 	public override void Start(RAIN.Core.AI ai)
 	{
 		base.Start(ai);
-		miner = GameObject.Find("Miner").GetComponent<Miner>();
+
+		minerScript = GameObject.Find("Miner").GetComponent<Miner>();
 	}
 	
 	public override ActionResult Execute(RAIN.Core.AI ai)
 	{
-		Debug.Log ("THIEF: ruuuuuuuuuuuuun!!!!!");
-		if (miner.isChasing())
-			return ActionResult.SUCCESS;
-		return ActionResult.FAILURE;
+		Debug.Log ("THIEF: ruuuuuuuuuuuuun!!!!!    Miner is chasing "+minerScript.IsChasing());
+		if (minerScript.IsChasing())
+			return ActionResult.FAILURE;
+		return ActionResult.SUCCESS;
 	}
 	
 	public override void Stop(RAIN.Core.AI ai)

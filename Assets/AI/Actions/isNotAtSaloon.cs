@@ -8,20 +8,21 @@ using RAIN.Core;
 public class isNotAtSaloon : RAINAction
 {
 	private Thief thief;
-	private GameObject saloon;
 	
 	public override void Start(RAIN.Core.AI ai) {
 		base.Start(ai);
 		thief = GameObject.Find("Thief").GetComponent<Thief>();
-		saloon = GameObject.Find("SaloonIdle");
+		thief.moneyStolen = false;
 	}
 	
 	public override ActionResult Execute(RAIN.Core.AI ai){
-		
-		if (thief.isAt(saloon)) {
+
+		if (thief.IsNearTarget()) {
 			thief.disableSteering();
+			thief.disableWandering();
 			return ActionResult.SUCCESS;
 		}
+		Debug.Log ("THIEF: Let's go to the saloon...");
 		return ActionResult.FAILURE;
 	}
 

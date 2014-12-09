@@ -18,7 +18,7 @@ public sealed class TakeThiefForADrink :  FSMState<Miner> {
 	}
 	
 	public override void Execute (Miner m) {
-		if (m.IsNearTarget ()){
+		if (m.IsNearTarget (1)){
 			m.say("Two pints for da both of us pleeeeaseeee... ");
 			m.disableSteering();
 

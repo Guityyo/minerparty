@@ -18,7 +18,7 @@ public sealed class QuenchThirstSaloonGetADrink :  FSMState<Miner> {
 	}
 	
 	public override void Execute (Miner m) {
-		if (m.IsNearTarget ()){
+		if (m.IsNearTarget (1)){
 			m.say("Another pint pleeeeaseeee... ");
 			m.disableSteering();
 
