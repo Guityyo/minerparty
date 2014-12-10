@@ -9,10 +9,12 @@ public class isMinerInMine : RAINAction
 {
 	private Miner miner;
 	private GameObject mine;
+	private Thief thief;
 
     public override void Start(RAIN.Core.AI ai) {  
 		base.Start(ai);
 		miner = GameObject.Find ("Miner").GetComponent<Miner>();
+		thief = GameObject.Find ("Thief").GetComponent<Thief>();
 		mine = GameObject.Find ("MineIdle");
     }
 
@@ -21,6 +23,7 @@ public class isMinerInMine : RAINAction
 			Debug.Log("THIEF: The miner is now in the mine... I can go there too!");
 			return ActionResult.SUCCESS;
 		}
+		thief.disableSteering ();
 		return  ActionResult.FAILURE;
     }
 

@@ -18,7 +18,7 @@ public sealed class QuenchThirstSaloonGetADrink :  FSMState<Miner> {
 	}
 	
 	public override void Execute (Miner m) {
-		if (m.IsNearTarget (1)){
+		if (m.IsNearTarget (4)){
 			m.say("Another pint pleeeeaseeee... ");
 			m.disableSteering();
 
@@ -28,8 +28,8 @@ public sealed class QuenchThirstSaloonGetADrink :  FSMState<Miner> {
 				m.ChangeState (VisitTreeToPee.Instance);
 			} else if (m.IsDarkOutside()) {
 				m.ChangeState(GoHomeSleep.Instance);
-			} else if (m.Thirst <= 0 || m.GoldCarried <= 0) {
-				m.ChangeState (ChaseThief.Instance);
+			} else if (m.Thirst <= 0 || m.GoldCarried <= Saloon.getBeerPrice()) {
+				m.ChangeState (EnterMineDigForGold.Instance);
 			}
 		}
 	}

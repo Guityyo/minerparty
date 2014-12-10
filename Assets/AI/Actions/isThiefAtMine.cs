@@ -16,7 +16,7 @@ public class isThiefAtMine : RAINAction
 	}
 	
 	public override ActionResult Execute(RAIN.Core.AI ai) {
-		if (thief.IsNearTarget()) {
+		if (thief.IsNearTarget(6)) {
 			thief.disableSteering();
 			return ActionResult.SUCCESS;
 		}

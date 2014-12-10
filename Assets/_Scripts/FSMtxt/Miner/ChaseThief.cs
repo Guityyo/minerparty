@@ -23,18 +23,21 @@ public sealed class ChaseThief :  FSMState<Miner> {
 	public override void Execute (Miner m) {
 
 		m.IncreaseFatigue ();
+		m.IncreaseThirst ();
 
 		if ( m.IsNearTarget (1) ){
 			m.disableSteering();
 			m.say("MINER: Caught ya!!");
-			m.chasing = false;
+			m.endChasing();
 			thiefScript.looseMoney();
 			m.ChangeState(QuenchThirstSaloonGetADrink.Instance);
 		} else if (m.IsDarkOutside()) {
-			m.chasing = false;
+			m.endChasing();
+			thiefScript.notChased();
 			m.ChangeState(GoHomeSleep.Instance);
 		} else if (m.IsExhausted () ) {
-			m.chasing = false;
+			m.endChasing();
+			thiefScript.notChased();
 			m.ChangeState (GoHomeSiesta.Instance);
 		}
 	}

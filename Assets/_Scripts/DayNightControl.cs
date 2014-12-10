@@ -11,9 +11,11 @@ public class DayNightControl : MonoBehaviour {
 	public float maxLightIntensity = 0.7F;
 	private float gameStartTime;
 	private int morningStartTime, dayStartTime, eveningStartTime, nightStartTime;
-
+	private AudioClip rooster;
 	// Use this for initialization
 	void Start () {
+
+
 		mainLight = GameObject.Find ("Main light");
 
 		morningStartTime = 4;  // 4 am on a 24 h day
@@ -36,8 +38,10 @@ public class DayNightControl : MonoBehaviour {
 		currentTime = 24 * Mathf.Repeat (Time.realtimeSinceStartup + gameStartTime * dayLengthInSec / 24, dayLengthInSec) / dayLengthInSec;
 
 		int currentTimeInt = Mathf.FloorToInt (currentTime);
-		if (currentTimeInt == morningStartTime) setDayTime(DayTime.morning);
-		else if (currentTimeInt == dayStartTime) setDayTime(DayTime.day);
+		if (currentTimeInt == morningStartTime) {
+						setDayTime (DayTime.morning);
+				//		audio.Play ("Rooster.mp3");
+		}else if (currentTimeInt == dayStartTime) setDayTime(DayTime.day);
 		else if (currentTimeInt == eveningStartTime) setDayTime(DayTime.evening);
 		else if (currentTimeInt == nightStartTime) setDayTime(DayTime.night);
 	}

@@ -58,11 +58,11 @@ public class Miner : MonoBehaviour {
 	}
 	
 	public bool HasPocketsFull() {
-		return GoldCarried >=  5000; 
+		return GoldCarried >=  2000; 
 	}
 	
 	public bool IsThirsty() {
-		return Thirst >= 3000;
+		return Thirst >= 4000;
 	}
 	
 	public bool IsBathroomNeedy() {
@@ -71,7 +71,7 @@ public class Miner : MonoBehaviour {
 	
 	public bool IsAt(GameObject target) {
 		Vector3 targetPos = target.transform.position;
-		return Vector3.Distance (minerCurrPos, targetPos) <= 1.0;
+		return Vector3.Distance (minerCurrPos, targetPos) <= 3.0;
 	}
 	
 	
@@ -95,6 +95,10 @@ public class Miner : MonoBehaviour {
 	
 	public void IncreaseFatigue() {
 		Fatigue++;
+	}
+
+	public void IncreaseThirst() {
+		Thirst++;
 	}
 	
 	public bool IsExhausted() {
@@ -158,7 +162,7 @@ public class Miner : MonoBehaviour {
 			say ("I AM RIIIIIIIICH!!!! YEAAAAAAH!!");
 			quitMiningWithMessage ("I AM RIIIIIIIICH!!!! YEAAAAAAH!!");				
 		} else {
-			Thirst++;
+
 			FSM.Update ();
 			minerCurrPos = transform.position;
 			
@@ -204,6 +208,11 @@ public class Miner : MonoBehaviour {
 	public void disableSteering(){
 		minerSteering.enabled = false;
 		animator.SetInteger ("speed", 0);
+	}
+
+	// Disable steering behaviour
+	public void endChasing(){
+		chasing = false;
 	}
 	
 	

@@ -23,6 +23,8 @@ public sealed class EnterMineDigForGold :  FSMState<Miner> {
 	
 	public override void Execute (Miner m) {
 
+		m.IncreaseThirst ();
+
 		if ( m.IsNearTarget (1) ){
 			m.disableSteering();
 			m.AddToGoldCarried (Mathf.RoundToInt(1 + UnityEngine.Random.value * 3)); // Each time, gets something between 1 and 4 gold!
@@ -35,7 +37,7 @@ public sealed class EnterMineDigForGold :  FSMState<Miner> {
 				m.ChangeState(GoHomeSleep.Instance);
 			} else if (m.HasPocketsFull ()) {
 				m.ChangeState (VisitBankDepositGold.Instance);
-			} else if (m.IsThirsty () && m.GoldCarried >= 50) { // so that our miner can afford some drinks
+			} else if (m.IsThirsty () && m.GoldCarried >= 500) { // so that our miner can afford some drinks
 				m.ChangeState (QuenchThirstSaloonGetADrink.Instance);
 				m.enableSteering(7);
 			} else if (m.IsExhausted () ) {

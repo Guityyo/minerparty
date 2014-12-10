@@ -17,7 +17,7 @@ public class isNotAtSaloon : RAINAction
 	
 	public override ActionResult Execute(RAIN.Core.AI ai){
 
-		if (thief.IsNearTarget()) {
+		if (thief.IsNearTarget(3)) {
 			thief.disableSteering();
 			thief.disableWandering();
 			return ActionResult.SUCCESS;

@@ -17,10 +17,12 @@ public class Thief : MonoBehaviour {
 	public int GoldCarried = 0;
 	private Miner minerScript;
 	public bool moneyStolen = false;
-	
+
+	// To avoid obstacles
 	private Vector3 dir;
-	//TODO add to avoid obstacles ??
-	
+	public float force = 50.0f;
+	public float minimumDistToAvoid = 4.0f;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -43,11 +45,16 @@ public class Thief : MonoBehaviour {
 			Debug.Log ("jippie!");
 		
 		thiefCurrPos = transform.position;
+
+		// AvoidObstacles method 
+		dir = (thiefTargetPos - thiefCurrPos);
+		dir.Normalize();
+		AvoidObstacles (ref dir);
 	}
 	
 	// Method to check if the Thief has arrived to the target
-	public bool IsNearTarget(){
-		return Vector3.Distance (thiefCurrPos, thiefTargetPos) <= 3.0;
+	public bool IsNearTarget(int dist){
+		return Vector3.Distance (thiefCurrPos, thiefTargetPos) <= dist;
 	}
 	
 	// To set the target of the steering behaviour
@@ -88,11 +95,11 @@ public class Thief : MonoBehaviour {
 	// Disable wander behaviour and enable Idle animator
 	public void disableWandering(){
 		thiefWander.enabled = false;
-		animator.SetInteger ("speed", 1);
+		animator.SetInteger ("speed", 0);
 	}
 	
 	public bool isAt(GameObject location){
-		return Vector3.Distance (thiefCurrPos, location.transform.position) <= 1.0;
+		return Vector3.Distance (thiefCurrPos, location.transform.position) <= 3.0;
 	}
 	
 	// To check if steering is enabled
@@ -117,6 +124,10 @@ public class Thief : MonoBehaviour {
 		minerScript.GoldCarried += goldToSteal;
 		moneyStolen = false;
 	}
+
+	public void notChased() {
+		moneyStolen = false;
+	}
 	
 	public bool hasStolenMoney(){
 		return moneyStolen;
@@ -127,6 +138,7 @@ public class Thief : MonoBehaviour {
 	}
 
 
+	//TODO add evasion to flee from miner
 	// Enable steering behaviour and disable wandering behaviour
 	public void enableEvasion(int vel){
 		thiefEvasion.enabled = true;
@@ -147,6 +159,31 @@ public class Thief : MonoBehaviour {
 		//thiefEvasion.Menace = thiefTarget.transform;
 		thiefTargetPos = thiefEvasion.Menace.transform.position;
 
+	}
+
+	public void AvoidObstacles(ref Vector3 dir)
+	{
+		RaycastHit hit;
+		
+		//Only detect layer 8 (Obstacles)
+		int layerMask = 1 << 8;
+		
+		//Check that the character hit with the obstacles within its minimum distance to avoid
+		if (Physics.Raycast(transform.position, transform.forward, out hit, minimumDistToAvoid, layerMask))
+		{
+			
+			//Get the normal of the hit point to calculate the new direction
+			Vector3 hitNormal = hit.normal;
+			hitNormal.y = 0.0f; //Don't want to move in Y-Space
+			
+			//Get the new directional vector by adding force to vehicle's current forward vector
+			dir = transform.forward + hitNormal * force;
+			
+			//Rotate the vehicle to its target directional vector
+			var rot = Quaternion.LookRotation(dir);
+			transform.rotation = Quaternion.Slerp(transform.rotation, rot, 5.0f *  Time.deltaTime);
+		}
+		
 	}
 }
 

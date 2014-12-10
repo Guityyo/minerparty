@@ -21,7 +21,7 @@ public sealed class GoHomeSiesta :  FSMState<Miner> {
 		if (m.IsNearTarget (1)){
 			m.say("zZzZzZz ... I like siesta... ");
 			m.disableSteering();
-			m.Fatigue--;
+			m.Fatigue=m.Fatigue-25;
 
 			if (m.IsDarkOutside()) {
 				m.say("Now that it's dark I might just stay in bed...");
