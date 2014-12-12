@@ -142,11 +142,6 @@ public class Miner : MonoBehaviour {
 		
 		animator = GetComponent<Animator> ();
 		
-		//minerSteering = GetComponent<SteerToFollow> ();
-		
-		//set the target
-		//minerSteering.Target = minerTarget.transform;
-		
 		//enabling steering
 		enableSteering(5);
 		

@@ -140,26 +140,25 @@ public class Thief : MonoBehaviour {
 
 	//TODO add evasion to flee from miner
 	// Enable steering behaviour and disable wandering behaviour
-	public void enableEvasion(int vel){
-		thiefEvasion.enabled = true;
-		thiefWander.enabled = false;
-		animator.SetInteger ("speed", vel);
-	}
-	
-	// Disable steering behaviour and enable wandering behaviour
-	public void disableEvasion(){
-		thiefWander.enabled = true;
-		thiefEvasion.enabled = false;
-		animator.SetInteger ("speed", 0);
-	}
-
-	public void setEvasion(){
-		thiefEvasion = GetComponent<SteerForEvasion> ();
-		thiefTarget = GameObject.Find("Miner");
-		//thiefEvasion.Menace = thiefTarget.transform;
-		thiefTargetPos = thiefEvasion.Menace.transform.position;
-
-	}
+//	public void enableEvasion(int vel){
+//		thiefEvasion.enabled = true;
+//		thiefWander.enabled = false;
+//		animator.SetInteger ("speed", vel);
+//	}
+//	
+//	// Disable steering behaviour and enable wandering behaviour
+//	public void disableEvasion(){
+//		thiefWander.enabled = true;
+//		thiefEvasion.enabled = false;
+//		animator.SetInteger ("speed", 0);
+//	}
+//
+//	public void setEvasion(){
+//		thiefEvasion = GetComponent<SteerForEvasion> ();
+//		thiefTarget = GameObject.Find("Miner");
+//		//thiefEvasion.Menace = thiefTarget.transform;
+//		thiefTargetPos = thiefEvasion.Menace.transform.position;
+//	}
 
 	public void AvoidObstacles(ref Vector3 dir)
 	{
