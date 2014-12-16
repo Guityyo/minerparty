@@ -230,7 +230,7 @@ public class Miner : MonoBehaviour {
 		//Check that the character hit with the obstacles within its minimum distance to avoid
 		if (Physics.Raycast(transform.position, transform.forward, out hit, minimumDistToAvoid, layerMask))
 		{
-			say("Obstacle detected, don't wanna run into it!");
+			Debug.Log("Miner: Obstacle detected, don't wanna run into it!");
 			
 			//Get the normal of the hit point to calculate the new direction
 			Vector3 hitNormal = hit.normal;
