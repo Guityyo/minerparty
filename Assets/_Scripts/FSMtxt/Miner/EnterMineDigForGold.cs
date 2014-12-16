@@ -19,14 +19,13 @@ public sealed class EnterMineDigForGold :  FSMState<Miner> {
 			m.ChangeTargetLocation(Locations.goldmine);
 			m.setTarget("MineIdle");
 		}
-		//m.enableSteering (1);
 	}
 	
 	public override void Execute (Miner m) {
 
 
 
-		if ( m.IsNearTarget (1) ){
+		if ( m.IsNearTarget (3) ){
 			m.disableSteering();
 			m.AddToGoldCarried (Mathf.RoundToInt(1 + UnityEngine.Random.value * 3)); // Each time, gets something between 1 and 4 gold!
 			m.say("Picking up nugget and that's " + m.GoldCarried + "...");
