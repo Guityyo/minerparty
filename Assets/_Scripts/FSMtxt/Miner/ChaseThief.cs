@@ -18,6 +18,7 @@ public sealed class ChaseThief :  FSMState<Miner> {
 		m.chasing = true;
 		m.setTarget ("Thief");
 		m.enableSteering (2);
+		m.say ("MINER: NOOOOO! I HAVE TO CATCH THE THIEF!!!");
 	}
 	
 	public override void Execute (Miner m) {
