@@ -16,8 +16,10 @@ public class isThiefAtMine : RAINAction
 	}
 	
 	public override ActionResult Execute(RAIN.Core.AI ai) {
-		if (thief.IsNearTarget(5)) {
+		thief.setTarget ("MineIdle");
+		if (thief.IsNearTarget(7)) {
 			thief.disableSteering();
+			thief.enableWandering(2);
 			return ActionResult.SUCCESS;
 		}
 		Debug.Log ("THIEF: I should probably head to the mine then...");

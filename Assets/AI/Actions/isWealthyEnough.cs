@@ -17,7 +17,7 @@ public class isWealthyEnough : RAINAction
 		if(thief.GoldCarried>= Saloon.getBeerPrice()){
         	return ActionResult.SUCCESS;
 		}
-		thief.enableWandering ();
+		thief.enableWandering (1);
 		return ActionResult.FAILURE;
     }
 

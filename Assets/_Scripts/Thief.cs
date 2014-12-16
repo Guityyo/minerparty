@@ -2,12 +2,11 @@
 using UnitySteer.Behaviors;
 using System.Collections;
 
-[RequireComponent(typeof(SteerForEvasion))]
+
 [RequireComponent(typeof(SteerToFollow))]
 [RequireComponent(typeof(Wander))]
 public class Thief : MonoBehaviour {
 	Perspective perspective;
-	private SteerForEvasion thiefEvasion;
 	private SteerToFollow thiefSteering;
 	private Wander thiefWander;
 	private Animator animator;
@@ -59,10 +58,7 @@ public class Thief : MonoBehaviour {
 	
 	// To set the target of the steering behaviour
 	public void setTarget(string newTarget){
-		//if (!thiefTarget.Equals(newTarget)) { //TODO this doesn't work, should be fixed
-		thiefSteering = GetComponent<SteerToFollow> ();
-		//animator = GetComponent<Animator> ();
-		
+		thiefSteering = GetComponent<SteerToFollow> ();	
 		thiefTarget = GameObject.Find(newTarget);
 		thiefSteering.Target = thiefTarget.transform;   // assign better the target
 		thiefTargetPos = thiefSteering.Target.transform.position;
@@ -70,7 +66,6 @@ public class Thief : MonoBehaviour {
 		// for obstacle avoidance
 		dir = (thiefTargetPos - thiefCurrPos); // directional vector to target position
 		dir.Normalize();
-		//}
 	}
 	
 	// Enable steering behaviour and disable wandering behaviour
@@ -88,9 +83,9 @@ public class Thief : MonoBehaviour {
 	}
 
 	// Enable wander behaviour and disable Idle animator
-	public void enableWandering(){
+	public void enableWandering(int vel){
 		thiefWander.enabled = true;
-		animator.SetInteger ("speed", 1);
+		animator.SetInteger ("speed", vel);
 	}
 	// Disable wander behaviour and enable Idle animator
 	public void disableWandering(){
@@ -138,27 +133,6 @@ public class Thief : MonoBehaviour {
 	}
 
 
-	//TODO add evasion to flee from miner
-	// Enable steering behaviour and disable wandering behaviour
-//	public void enableEvasion(int vel){
-//		thiefEvasion.enabled = true;
-//		thiefWander.enabled = false;
-//		animator.SetInteger ("speed", vel);
-//	}
-//	
-//	// Disable steering behaviour and enable wandering behaviour
-//	public void disableEvasion(){
-//		thiefWander.enabled = true;
-//		thiefEvasion.enabled = false;
-//		animator.SetInteger ("speed", 0);
-//	}
-//
-//	public void setEvasion(){
-//		thiefEvasion = GetComponent<SteerForEvasion> ();
-//		thiefTarget = GameObject.Find("Miner");
-//		//thiefEvasion.Menace = thiefTarget.transform;
-//		thiefTargetPos = thiefEvasion.Menace.transform.position;
-//	}
 
 	public void AvoidObstacles(ref Vector3 dir)
 	{

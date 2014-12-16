@@ -9,9 +9,10 @@ public class isMineVisible : RAINAction
 {
 	private Perspective thiefPerspective;
 	private GameObject mine;
-    
+
 	public override void Start(RAIN.Core.AI ai) {
         base.Start(ai);
+
 		thiefPerspective = GameObject.Find("Thief").GetComponent<Perspective>() ;
 		mine = GameObject.Find("Mine");
     }

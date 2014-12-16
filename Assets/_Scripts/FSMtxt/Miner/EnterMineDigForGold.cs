@@ -19,6 +19,7 @@ public sealed class EnterMineDigForGold :  FSMState<Miner> {
 			m.ChangeTargetLocation(Locations.goldmine);
 			m.setTarget("MineIdle");
 		}
+		//m.enableSteering (1);
 	}
 	
 	public override void Execute (Miner m) {

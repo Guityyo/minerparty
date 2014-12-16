@@ -17,7 +17,7 @@ public sealed class ChaseThief :  FSMState<Miner> {
 		thiefScript = GameObject.Find("Thief").GetComponent<Thief>();
 		m.chasing = true;
 		m.setTarget ("Thief");
-		m.enableSteering (400);
+		m.enableSteering (2);
 	}
 	
 	public override void Execute (Miner m) {

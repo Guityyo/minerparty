@@ -143,7 +143,7 @@ public class Miner : MonoBehaviour {
 		animator = GetComponent<Animator> ();
 		
 		//enabling steering
-		enableSteering(5);
+		enableSteering(1);
 		
 		minerCurrPos = transform.position;
 		minerTargetPos = minerSteering.Target.transform.position;
@@ -176,7 +176,7 @@ public class Miner : MonoBehaviour {
 		say ("Next stop: " + l + "!");
 		
 		if( minerSteering != null){
-			enableSteering(5);
+			enableSteering(1);
 		}
 	}
 	
@@ -188,9 +188,6 @@ public class Miner : MonoBehaviour {
 		minerSteering.Target = minerTarget.transform;
 		
 		minerTargetPos = minerSteering.Target.transform.position;
-		// for obstacle avoidance
-		//dir = (minerTargetPos - minerCurrPos); // directional vector to target position
-		//dir.Normalize();
 	}
 	
 	// Enable steering behaviour
