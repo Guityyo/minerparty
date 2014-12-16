@@ -8,7 +8,7 @@ public class SoundController : MonoBehaviour {
 	public AudioSource nightMusic;
 	public AudioSource dayMusic;
 	public float morningBrightness;
-	public Miner minerScript;
+	private Miner minerScript;
 	private float lastLightIntensity = 1;
 
 
