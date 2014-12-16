@@ -38,7 +38,7 @@ public sealed class EnterMineDigForGold :  FSMState<Miner> {
 				m.ChangeState (VisitBankDepositGold.Instance);
 			} else if (m.IsThirsty () && m.GoldCarried >= 500) { // so that our miner can afford some drinks
 				m.ChangeState (QuenchThirstSaloonGetADrink.Instance);
-				m.enableSteering(7);
+				m.enableSteering(1);
 			} else if (m.IsExhausted () ) {
 				m.ChangeState (GoHomeSiesta.Instance);
 			}
