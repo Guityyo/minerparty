@@ -5,7 +5,8 @@ public class SoundController : MonoBehaviour {
 	public GameObject daylightObject;
 	public AudioClip rooster;
 	public AudioSource chasingMusic;
-	public AudioSource idleMusic;
+	public AudioSource nightMusic;
+	public AudioSource dayMusic;
 	public float morningBrightness;
 	public Miner minerScript;
 	private float lastLightIntensity = 1;
@@ -20,7 +21,7 @@ public class SoundController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		updateMorningSound();
-		updateChasingMusic();
+		updateMusic();
 	}
 
 	private void updateMorningSound() {
@@ -31,11 +32,21 @@ public class SoundController : MonoBehaviour {
 		lastLightIntensity = currentLightIntensity;
 	}
 
-	private void updateChasingMusic() {
-		if (minerScript.IsChasing ()) {
-			if (! chasingMusic.isPlaying) chasingMusic.Play ();
+	private void updateMusic() {
+		if (minerScript.IsDarkOutside ()) {
+			if (dayMusic.isPlaying) dayMusic.Stop();
+			if (chasingMusic.isPlaying) chasingMusic.Stop();
+			if (! nightMusic.isPlaying) nightMusic.Play();
 		} else {
-			if (chasingMusic.isPlaying) chasingMusic.Stop ();
+			if (minerScript.IsChasing ()) {
+				if (nightMusic.isPlaying) nightMusic.Stop();
+				if (dayMusic.isPlaying) dayMusic.Stop();
+				if (! chasingMusic.isPlaying) chasingMusic.Play();
+			} else {
+				if (nightMusic.isPlaying) nightMusic.Stop();
+				if (chasingMusic.isPlaying) chasingMusic.Stop();
+				if (! dayMusic.isPlaying) dayMusic.Play();
+			}
 		}
 	}
 }
