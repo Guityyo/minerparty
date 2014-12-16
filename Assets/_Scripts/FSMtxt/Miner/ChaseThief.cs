@@ -25,7 +25,7 @@ public sealed class ChaseThief :  FSMState<Miner> {
 		m.IncreaseFatigue ();
 		m.IncreaseThirst ();
 
-		if ( m.IsNearTarget (1) ){
+		if ( m.IsNearTarget (m.MinDistToCatch) ){
 			m.disableSteering();
 			m.say("MINER: Caught ya!!");
 			m.endChasing();

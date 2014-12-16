@@ -64,8 +64,8 @@ public class Thief : MonoBehaviour {
 		thiefTargetPos = thiefSteering.Target.transform.position;
 		
 		// for obstacle avoidance
-		dir = (thiefTargetPos - thiefCurrPos); // directional vector to target position
-		dir.Normalize();
+		//dir = (thiefTargetPos - thiefCurrPos); // directional vector to target position
+		//dir.Normalize();
 	}
 	
 	// Enable steering behaviour and disable wandering behaviour

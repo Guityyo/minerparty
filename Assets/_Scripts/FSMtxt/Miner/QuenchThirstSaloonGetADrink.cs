@@ -22,7 +22,7 @@ public sealed class QuenchThirstSaloonGetADrink :  FSMState<Miner> {
 			m.say("Another pint pleeeeaseeee... ");
 			m.disableSteering();
 
-			m.Drinking(200);
+			m.Drinking(50);
 
 			if (m.IsBathroomNeedy()) {
 				m.ChangeState (VisitTreeToPee.Instance);

@@ -15,7 +15,8 @@ public class Miner : MonoBehaviour {
 	public int Thirst = 0;
 	public int BathroomNeed = 0;
 	public int Fatigue = 0;
-	
+	public int MinDistToCatch = 2;
+
 	public SteerToFollow minerSteering;
 	public Animator animator;
 	
