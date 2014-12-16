@@ -60,12 +60,8 @@ public class Thief : MonoBehaviour {
 	public void setTarget(string newTarget){
 		thiefSteering = GetComponent<SteerToFollow> ();	
 		thiefTarget = GameObject.Find(newTarget);
-		thiefSteering.Target = thiefTarget.transform;   // assign better the target
+		thiefSteering.Target = thiefTarget.transform;   
 		thiefTargetPos = thiefSteering.Target.transform.position;
-		
-		// for obstacle avoidance
-		//dir = (thiefTargetPos - thiefCurrPos); // directional vector to target position
-		//dir.Normalize();
 	}
 	
 	// Enable steering behaviour and disable wandering behaviour

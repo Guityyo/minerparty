@@ -29,16 +29,16 @@ public sealed class ChaseThief :  FSMState<Miner> {
 		if ( m.IsNearTarget (m.MinDistToCatch) ){
 			m.disableSteering();
 			m.say("MINER: Caught ya!!");
-			m.endChasing();
 			thiefScript.looseMoney();
+			m.endChasing();
 			m.ChangeState(QuenchThirstSaloonGetADrink.Instance);
 		} else if (m.IsDarkOutside()) {
-			m.endChasing();
 			thiefScript.notChased();
+			m.endChasing();
 			m.ChangeState(GoHomeSleep.Instance);
 		} else if (m.IsExhausted () ) {
-			m.endChasing();
 			thiefScript.notChased();
+			m.endChasing();
 			m.ChangeState (GoHomeSiesta.Instance);
 		}
 	}

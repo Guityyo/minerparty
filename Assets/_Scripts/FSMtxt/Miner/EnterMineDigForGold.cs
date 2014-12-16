@@ -23,15 +23,12 @@ public sealed class EnterMineDigForGold :  FSMState<Miner> {
 	
 	public override void Execute (Miner m) {
 
-
-		m.IncreaseThirst ();
-
 		if ( m.IsNearTarget (3) ){
 			m.disableSteering();
 			m.AddToGoldCarried (Mathf.RoundToInt(1 + UnityEngine.Random.value * 3)); // Each time, gets something between 1 and 4 gold!
 			m.say("Picking up nugget and that's " + m.GoldCarried + "...");
 			m.IncreaseFatigue ();
-
+			m.IncreaseThirst ();
 
 			if (thief.hasStolenMoney()){
 				m.ChangeState(ChaseThief.Instance);
