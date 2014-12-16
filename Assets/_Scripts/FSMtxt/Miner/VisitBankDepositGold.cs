@@ -34,7 +34,7 @@ public sealed class VisitBankDepositGold :  FSMState<Miner> {
 			if (m.IsDarkOutside()) {
 				m.ChangeState(GoHomeSleep.Instance);
 			} else if (m.GoldCarried <= 0)	{
-				m.ChangeState(ChaseThief.Instance);
+				m.ChangeState(EnterMineDigForGold.Instance);
 			}
 		}
 	}
