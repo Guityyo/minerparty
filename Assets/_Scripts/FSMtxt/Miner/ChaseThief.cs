@@ -11,14 +11,11 @@ public sealed class ChaseThief :  FSMState<Miner> {
 	private Thief thiefScript;
 	
 	public override void Enter (Miner m) {
-
-		Debug.Log("MINER: NOOOOO! I HAVE TO CATCH THE THIEF!!!");
-	
 		thiefScript = GameObject.Find("Thief").GetComponent<Thief>();
 		m.chasing = true;
 		m.setTarget ("Thief");
 		m.enableSteering (2);
-		m.say ("MINER: NOOOOO! I HAVE TO CATCH THE THIEF!!!");
+		m.say ("NOOOOO! I HAVE TO CATCH THE THIEF!!!");
 	}
 	
 	public override void Execute (Miner m) {
