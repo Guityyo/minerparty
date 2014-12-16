@@ -8,15 +8,15 @@ public class Wander : MonoBehaviour
     public float movementSpeed = 5.0f;
     private float rotSpeed = 2.0f;
     private float minX, maxX, minZ, maxZ;
-
+	public float wanderRadius = 30.0f;
 	// Use this for initialization
 	void Start () 
     {
-        minX = -15.0f;
-        maxX = 15.0f;
+        minX = -wanderRadius;
+        maxX = wanderRadius;
 
-        minZ = -15.0f;
-        maxZ = 15.0f;
+        minZ = -wanderRadius;
+        maxZ = wanderRadius;
 
         //Get Wander Position
         GetNextPosition();

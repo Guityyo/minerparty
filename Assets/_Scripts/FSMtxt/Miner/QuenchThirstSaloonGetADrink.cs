@@ -18,11 +18,12 @@ public sealed class QuenchThirstSaloonGetADrink :  FSMState<Miner> {
 	}
 	
 	public override void Execute (Miner m) {
+	
 		if (m.IsNearTarget (4)){
 			m.say("Another pint pleeeeaseeee... ");
 			m.disableSteering();
 
-			m.Drinking(50);
+			m.Drinking(20);
 
 			if (m.IsBathroomNeedy()) {
 				m.ChangeState (VisitTreeToPee.Instance);
