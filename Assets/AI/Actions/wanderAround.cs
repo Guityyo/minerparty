@@ -12,17 +12,17 @@ public class wanderAround : RAINAction
     public override void Start(RAIN.Core.AI ai)
     {
         base.Start(ai);
+		thief = GameObject.Find("Thief").GetComponent<Thief>();
     }
 
     public override ActionResult Execute(RAIN.Core.AI ai)
-    {
-        return ActionResult.SUCCESS;
-		thief = GameObject.Find ("Thief").GetComponent<Thief>();
-		thief.enableWandering (1);
+	{
+		thief.enableWandering(1);
+		return ActionResult.SUCCESS;
     }
 
     public override void Stop(RAIN.Core.AI ai)
-    {
+	{
         base.Stop(ai);
     }
 }

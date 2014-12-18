@@ -15,22 +15,18 @@ public class goToSaloon : RAINAction
 	public override void Start(RAIN.Core.AI ai)
 	{
 		base.Start(ai);
-		
 		thief = GameObject.Find("Thief").GetComponent<Thief>();
-
-		
 	}
 	
 	public override ActionResult Execute(RAIN.Core.AI ai)
 	{
-		thief.setTarget("SaloonIdle");
-		if (! thief.isSteeringEnabled())
-			thief.enableSteering(1);
 		Debug.Log ("THIEF: Going to the saloon to drink...");
-		return ActionResult.FAILURE;
+		thief.setTarget("SaloonIdle");
+		thief.enableSteering(1);
+		return ActionResult.SUCCESS;
 	}
     public override void Stop(RAIN.Core.AI ai)
     {
         base.Stop(ai);
-    }
+	}
 }

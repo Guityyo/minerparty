@@ -13,17 +13,15 @@ public class goToMine : RAINAction
 	
 	public override void Start(RAIN.Core.AI ai) {
 		base.Start(ai);
-		
 		thief = GameObject.Find("Thief").GetComponent<Thief>();
-		thief.setTarget("MineIdle");
 	}
 	
 	public override ActionResult Execute(RAIN.Core.AI ai)
 	{
-		if (! thief.isSteeringEnabled())
-			thief.enableSteering(2);
 		Debug.Log ("THIEF: Going to the mine to steal some gold...");
-		return ActionResult.FAILURE;
+		thief.setTarget("MineIdle");
+		thief.enableSteering(2);
+		return ActionResult.SUCCESS;
 	}
 	
 	public override void Stop(RAIN.Core.AI ai)

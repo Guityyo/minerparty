@@ -19,12 +19,8 @@ public class isMinerInMine : RAINAction
     }
 
     public override ActionResult Execute(RAIN.Core.AI ai) {
-		if (miner.IsAt (mine)) {
-			Debug.Log("THIEF: The miner is now in the mine... I can go there too!");
-			return ActionResult.SUCCESS;
-		}
-		thief.disableSteering ();
-		return  ActionResult.FAILURE;
+		if (miner.IsAt(mine)) Debug.Log("THIEF: The miner is now in the mine... I can go there too!");
+		return miner.IsAt(mine) ? ActionResult.SUCCESS : ActionResult.FAILURE;
     }
 
     public override void Stop(RAIN.Core.AI ai) {

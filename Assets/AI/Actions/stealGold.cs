@@ -13,6 +13,7 @@ public class stealGold : RAINAction
 	{
 		base.Start(ai);
 		thiefScript = GameObject.Find("Thief").GetComponent<Thief>();
+		thiefScript.disableAllMovement ();
 	}
 	
 	public override ActionResult Execute(RAIN.Core.AI ai)

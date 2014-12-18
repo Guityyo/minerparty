@@ -4,18 +4,21 @@ using System.Collections;
 
 
 [RequireComponent(typeof(SteerToFollow))]
+[RequireComponent(typeof(SteerForEvasion))]
 [RequireComponent(typeof(Wander))]
 public class Thief : MonoBehaviour {
-	Perspective perspective;
+	public Perspective perspective;
 	private SteerToFollow thiefSteering;
+	private SteerForEvasion thiefEvasion;
 	private Wander thiefWander;
 	private Animator animator;
 	public Vector3 thiefCurrPos;
-	public Vector3 thiefTargetPos = new Vector3 ();
+	public Vector3 thiefTargetPos = new Vector3();
 	public GameObject thiefTarget;
 	public int GoldCarried = 0;
 	private Miner minerScript;
 	public bool moneyStolen = false;
+	private bool isFleeingState = false;
 
 	// To avoid obstacles
 	private Vector3 dir;
@@ -24,77 +27,121 @@ public class Thief : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 		perspective = gameObject.GetComponent<Perspective>();
-		thiefSteering = GetComponent<SteerToFollow> ();
-		thiefWander = GetComponent<Wander> ();
-		animator = GetComponent<Animator> ();
+		thiefSteering = GetComponent<SteerToFollow>();
+		thiefWander = GetComponent<Wander>();
+		animator = GetComponent<Animator>();
+		thiefEvasion = GetComponent<SteerForEvasion>();	
 		minerScript = GameObject.Find("Miner").GetComponent<Miner>();
 		thiefCurrPos = transform.position;
 		
 		thiefSteering.enabled = false;
 		thiefWander.enabled = true;
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		GameObject mine = GameObject.Find("Mine");
-		if (perspective.IsWithinViewfield (mine))
-			Debug.Log ("jippie!");
+		if (perspective.IsWithinViewfield(mine)) Debug.Log("jippie!");
 		
 		thiefCurrPos = transform.position;
 
 		// AvoidObstacles method 
-		dir = (thiefTargetPos - thiefCurrPos);
+		dir = thiefTargetPos - thiefCurrPos;
 		dir.Normalize();
-		AvoidObstacles (ref dir);
+		AvoidObstacles(ref dir);
 	}
 	
+	// Method to check if the Thief is near to a position
+	public bool IsNear(int dist, Vector3 targetPosition) {
+		return Vector3.Distance(thiefCurrPos, targetPosition) <= dist;
+	}
+
 	// Method to check if the Thief has arrived to the target
-	public bool IsNearTarget(int dist){
-		return Vector3.Distance (thiefCurrPos, thiefTargetPos) <= dist;
+	public bool IsNearTarget(int dist) {
+		return IsNear(dist, thiefTargetPos);
 	}
-	
+
 	// To set the target of the steering behaviour
-	public void setTarget(string newTarget){
-		thiefSteering = GetComponent<SteerToFollow> ();	
+	public void setTarget(string newTarget) {
+		thiefSteering = GetComponent<SteerToFollow>();	
 		thiefTarget = GameObject.Find(newTarget);
 		thiefSteering.Target = thiefTarget.transform;   
 		thiefTargetPos = thiefSteering.Target.transform.position;
 	}
+
+	// To set the target of the evasion behaviour
+	public void setTargetEvasion() {
+		thiefEvasion.Menace = minerScript.GetComponent<Vehicle>();
+		thiefTargetPos = thiefEvasion.Menace.transform.position;
+	}
 	
 	// Enable steering behaviour and disable wandering behaviour
-	public void enableSteering(int vel){ 
+	public void enableSteering(int vel) { 
+		disableWandering ();
+		disableEvasion ();
 		thiefSteering.enabled = true;
 		thiefWander.enabled = false;
-		animator.SetInteger ("speed", vel);
+		animator.SetInteger("speed", vel);
 	}
 	
-	// Disable steering behaviour and enable wandering behaviour
-	public void disableSteering(){
-		thiefWander.enabled = true;
+	// Disable steering behaviour and enable Idle animator
+	public void disableSteering() {
 		thiefSteering.enabled = false;
-		animator.SetInteger ("speed", 1);
 	}
 
+	// Enable evasion behaviour and disable wandering behaviour
+	public void enableEvasion() { 
+		disableWandering ();
+		disableSteering ();
+//		setTargetEvasion();
+		thiefEvasion.enabled = true;
+		animator.SetInteger("speed", 2);
+		isFleeingState = true;
+	}
+	
+	// Disable evasion behaviour and enable Idle animator
+	public void disableEvasion() {
+		thiefEvasion.enabled = false;
+		isFleeingState = false;
+	}
+
+	// Check if thief is fleeing
+	public bool isFleeing() {
+		return isFleeingState;
+	}
+	
 	// Enable wander behaviour and disable Idle animator
-	public void enableWandering(int vel){
+	public void enableWandering(int vel) {
+		disableEvasion ();
+		disableSteering ();
 		thiefWander.enabled = true;
 		animator.SetInteger ("speed", vel);
 	}
-	// Disable wander behaviour and enable Idle animator
-	public void disableWandering(){
+	// Disable wander behaviour
+	public void disableWandering() {
 		thiefWander.enabled = false;
-		animator.SetInteger ("speed", 0);
+	}
+
+	// Enable Idle animator
+	public void enableIdleAnimator() {
+		animator.SetInteger("speed", 0);
+	}
+
+	// Disable all movements and enable idle animator
+	public void disableAllMovement() {
+		disableWandering();
+		disableEvasion();
+		disableSteering();
+		enableIdleAnimator();
 	}
 	
-	public bool isAt(GameObject location){
-		return Vector3.Distance (thiefCurrPos, location.transform.position) <= 3.0;
+	public bool isAt(GameObject location) {
+		return Vector3.Distance(thiefCurrPos, location.transform.position) <= 3.0;
 	}
 	
 	// To check if steering is enabled
-	public bool isSteeringEnabled(){
+	public bool isSteeringEnabled() {
 		return thiefSteering.enabled;
 	}
 	
@@ -109,7 +156,7 @@ public class Thief : MonoBehaviour {
 	}
 
 	public void looseMoney() {
-		Debug.Log("THIEF: Oh no! I didn't want to steal you...");
+		Debug.Log("THIEF: Oh no! I didn't want to rob you...");
 		int goldToSteal = GoldCarried;
 		GoldCarried -= goldToSteal;
 		minerScript.GoldCarried += goldToSteal;
@@ -120,27 +167,22 @@ public class Thief : MonoBehaviour {
 		moneyStolen = false;
 	}
 	
-	public bool hasStolenMoney(){
+	public bool hasStolenMoney() {
 		return moneyStolen;
 	}
 	
-	public void drinkBeer(){
+	public void drinkBeer() {
 		GoldCarried -= Saloon.getBeerPrice();
 	}
 
-
-
-	public void AvoidObstacles(ref Vector3 dir)
-	{
+	public void AvoidObstacles(ref Vector3 dir) {
 		RaycastHit hit;
 		
 		//Only detect layer 8 (Obstacles)
 		int layerMask = 1 << 8;
 		
 		//Check that the character hit with the obstacles within its minimum distance to avoid
-		if (Physics.Raycast(transform.position, transform.forward, out hit, minimumDistToAvoid, layerMask))
-		{
-			
+		if (Physics.Raycast(transform.position, transform.forward, out hit, minimumDistToAvoid, layerMask)) {
 			//Get the normal of the hit point to calculate the new direction
 			Vector3 hitNormal = hit.normal;
 			hitNormal.y = 0.0f; //Don't want to move in Y-Space
@@ -152,7 +194,5 @@ public class Thief : MonoBehaviour {
 			var rot = Quaternion.LookRotation(dir);
 			transform.rotation = Quaternion.Slerp(transform.rotation, rot, 5.0f *  Time.deltaTime);
 		}
-		
 	}
 }
-

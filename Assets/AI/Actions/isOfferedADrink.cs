@@ -17,9 +17,7 @@ public class isOfferedADrink : RAINAction
 
     public override ActionResult Execute(RAIN.Core.AI ai)
     {
-		if (minerScript.IsRichEnough())
-        	return ActionResult.SUCCESS;
-		return ActionResult.FAILURE;
+		return (minerScript.IsRichEnough()) ? ActionResult.SUCCESS : ActionResult.FAILURE;
     }
 
     public override void Stop(RAIN.Core.AI ai)

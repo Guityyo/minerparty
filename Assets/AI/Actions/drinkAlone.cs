@@ -11,6 +11,7 @@ public class drinkAlone : RAINAction
     public override void Start(RAIN.Core.AI ai){
         base.Start(ai);
 		thief = GameObject.Find("Thief").GetComponent<Thief>();
+		thief.disableAllMovement();
     }
 
     public override ActionResult Execute(RAIN.Core.AI ai){

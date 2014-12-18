@@ -12,18 +12,12 @@ public class isMineVisible : RAINAction
 
 	public override void Start(RAIN.Core.AI ai) {
         base.Start(ai);
-
 		thiefPerspective = GameObject.Find("Thief").GetComponent<Perspective>() ;
 		mine = GameObject.Find("Mine");
     }
 
     public override ActionResult Execute(RAIN.Core.AI ai) {
-		if (thiefPerspective.IsWithinViewfield (mine)) {
-			Debug.Log("Mine Visible!!");
-			return ActionResult.SUCCESS;
-		}
-		Debug.Log("Mine not visible :(");
-		return ActionResult.FAILURE;
+		return thiefPerspective.IsWithinViewfield(mine) ? ActionResult.SUCCESS : ActionResult.FAILURE;
     }
 
     public override void Stop(RAIN.Core.AI ai) {

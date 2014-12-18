@@ -17,7 +17,8 @@ public class fleeFromMiner : RAINAction
 
     public override ActionResult Execute(RAIN.Core.AI ai)
     {
-        return ActionResult.FAILURE;
+		thiefScript.enableEvasion();
+        return ActionResult.SUCCESS;
     }
 
     public override void Stop(RAIN.Core.AI ai)

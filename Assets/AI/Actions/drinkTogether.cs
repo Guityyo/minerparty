@@ -8,11 +8,14 @@ using RAIN.Core;
 public class drinkTogether : RAINAction
 {
 	private Miner minerScript;
+	private Thief thiefScript;
 
     public override void Start(RAIN.Core.AI ai)
     {
         base.Start(ai);
-		minerScript = GameObject.Find ("Miner").GetComponent<Miner> ();
+		minerScript = GameObject.Find ("Miner").GetComponent<Miner>();
+		thiefScript = GameObject.Find("Thief").GetComponent<Thief>();
+		thiefScript.disableAllMovement();
     }
 
     public override ActionResult Execute(RAIN.Core.AI ai)
