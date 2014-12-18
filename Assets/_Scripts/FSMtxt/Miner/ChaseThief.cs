@@ -19,8 +19,7 @@ public sealed class ChaseThief :  FSMState<Miner> {
 	}
 	
 	public override void Execute (Miner m) {
-
-		m.IncreaseFatigue ();
+		m.IncreaseFatigue (2);
 		m.IncreaseThirst ();
 
 		if ( m.IsNearTarget (m.MinDistToCatch) ){

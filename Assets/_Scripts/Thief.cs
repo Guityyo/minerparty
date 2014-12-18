@@ -94,7 +94,6 @@ public class Thief : MonoBehaviour {
 	public void enableEvasion() { 
 		disableWandering ();
 		disableSteering ();
-//		setTargetEvasion();
 		thiefEvasion.enabled = true;
 		animator.SetInteger("speed", 2);
 		isFleeingState = true;
@@ -157,9 +156,9 @@ public class Thief : MonoBehaviour {
 
 	public void looseMoney() {
 		Debug.Log("THIEF: Oh no! I didn't want to rob you...");
-		int goldToSteal = GoldCarried;
-		GoldCarried -= goldToSteal;
-		minerScript.GoldCarried += goldToSteal;
+		int goldToReturn = 3 * GoldCarried / 4;
+		GoldCarried -= goldToReturn;
+		minerScript.GoldCarried += goldToReturn;
 		moneyStolen = false;
 	}
 

@@ -15,15 +15,14 @@ public class Miner : MonoBehaviour {
 	public int Thirst = 0;
 	public int BathroomNeed = 0;
 	public int Fatigue = 0;
-	public int MinDistToCatch = 2;
+	public int MinDistToCatch = 5;
 
 	public SteerToFollow minerSteering;
 	public Animator animator;
 	
 	// Miner position
 	public Vector3 minerCurrPos;
-	public Vector3 minerTargetPos = new Vector3 ();
-	
+
 	// Target object
 	public GameObject minerTarget, mainLight;
 	
@@ -95,7 +94,11 @@ public class Miner : MonoBehaviour {
 	}
 	
 	public void IncreaseFatigue() {
-		Fatigue++;
+		IncreaseFatigue(1);
+	}
+	
+	public void IncreaseFatigue(int amount) {
+		Fatigue += amount;
 	}
 
 	public void IncreaseThirst() {
@@ -108,7 +111,7 @@ public class Miner : MonoBehaviour {
 	
 	// Method to check if the Miner has arrived to the target
 	public bool IsNearTarget(int dist){
-		return Vector3.Distance (minerCurrPos, minerTargetPos) <= dist;
+		return Vector3.Distance (minerCurrPos, targetPosition()) <= dist;
 	}
 	
 	// Method to check if it is night
@@ -147,9 +150,8 @@ public class Miner : MonoBehaviour {
 		enableSteering(1);
 		
 		minerCurrPos = transform.position;
-		minerTargetPos = minerSteering.Target.transform.position;
-		
-		dir = (minerTargetPos - minerCurrPos); // directional vector to target position
+
+		dir = (targetPosition() - minerCurrPos); // directional vector to target position
 		dir.Normalize();
 	}
 	
@@ -163,7 +165,7 @@ public class Miner : MonoBehaviour {
 			minerCurrPos = transform.position;
 			
 			// AvoidObstacles method 
-			dir = (minerTargetPos - minerCurrPos);
+			dir = (targetPosition() - minerCurrPos);
 			dir.Normalize();
 			AvoidObstacles (ref dir);	
 			
@@ -187,8 +189,10 @@ public class Miner : MonoBehaviour {
 		
 		minerTarget = GameObject.Find(newTarget);
 		minerSteering.Target = minerTarget.transform;
-		
-		minerTargetPos = minerSteering.Target.transform.position;
+	}
+
+	private Vector3 targetPosition() {
+		return minerSteering.Target.transform.position;
 	}
 	
 	// Enable steering behaviour
@@ -208,7 +212,6 @@ public class Miner : MonoBehaviour {
 		chasing = false;
 	}
 	
-	
 	public void quitMiningWithMessage(string message){
 		if (!gameEnded) {
 			disableSteering();
@@ -218,7 +221,6 @@ public class Miner : MonoBehaviour {
 			Application.Quit (); // it does not work in editor mode
 		}
 	}
-	
 	
 	public void AvoidObstacles(ref Vector3 dir)
 	{
