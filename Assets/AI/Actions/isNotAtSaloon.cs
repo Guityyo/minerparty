@@ -13,6 +13,7 @@ public class isNotAtSaloon : RAINAction
 		base.Start(ai);
 		thief = GameObject.Find("Thief").GetComponent<Thief>();
 		thief.moneyStolen = false;
+		thief.setTarget ("SaloonIdle");
 	}
 	
 	public override ActionResult Execute(RAIN.Core.AI ai){

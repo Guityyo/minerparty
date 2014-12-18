@@ -25,6 +25,8 @@ public class isMinerChasing : RAINAction
 
 		if (minerScript.IsChasing())
 			return ActionResult.FAILURE;
+
+		thiefScript.disableEvasion ();
 		return ActionResult.SUCCESS;
 	}
 	

@@ -4,10 +4,12 @@ using System.Collections;
 
 
 [RequireComponent(typeof(SteerToFollow))]
+[RequireComponent(typeof(SteerForEvasion))]
 [RequireComponent(typeof(Wander))]
 public class Thief : MonoBehaviour {
 	Perspective perspective;
 	private SteerToFollow thiefSteering;
+	private SteerForEvasion thiefEvasion;
 	private Wander thiefWander;
 	private Animator animator;
 	public Vector3 thiefCurrPos;
@@ -63,6 +65,16 @@ public class Thief : MonoBehaviour {
 		thiefSteering.Target = thiefTarget.transform;   
 		thiefTargetPos = thiefSteering.Target.transform.position;
 	}
+
+	// To set the target of the evasion behaviour
+	public void setTargetEvasion(){
+		thiefEvasion = GetComponent<SteerForEvasion> ();	
+		//thiefTarget = GameObject.Find(newTarget).GetComponent<Vehicle>();
+		thiefEvasion.Menace = minerScript.GetComponent<Vehicle> ();
+		//thiefEvasion.Menace = thiefTarget.transform; 
+		//thiefEvasion.Menace = thiefTarget.transform;   
+		thiefTargetPos = thiefEvasion.Menace.transform.position;
+	}
 	
 	// Enable steering behaviour and disable wandering behaviour
 	public void enableSteering(int vel){ 
@@ -78,6 +90,20 @@ public class Thief : MonoBehaviour {
 		animator.SetInteger ("speed", 1);
 	}
 
+	// Enable evasion behaviour and disable wandering behaviour
+	public void enableEvasion(){ 
+		setTargetEvasion ();
+		thiefEvasion.enabled = true;
+		animator.SetInteger ("speed", 2);
+	}
+	
+	// Disable evasion behaviour and enable wandering behaviour
+	public void disableEvasion(){
+		thiefWander.enabled = true;
+		thiefEvasion.enabled = false;
+		animator.SetInteger ("speed", 1);
+	}
+	
 	// Enable wander behaviour and disable Idle animator
 	public void enableWandering(int vel){
 		thiefWander.enabled = true;

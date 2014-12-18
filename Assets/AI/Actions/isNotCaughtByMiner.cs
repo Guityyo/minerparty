@@ -17,8 +17,10 @@ public class isNotCaughtByMiner : RAINAction
 
     public override ActionResult Execute(RAIN.Core.AI ai)
     {
-		if (thiefScript.hasStolenMoney())
-        	return ActionResult.FAILURE;
+		if (thiefScript.hasStolenMoney ()) 
+						return ActionResult.FAILURE;
+
+		thiefScript.disableEvasion ();
 		return ActionResult.SUCCESS;
     }
 
