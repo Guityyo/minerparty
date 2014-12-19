@@ -18,7 +18,6 @@ public class Thief : MonoBehaviour {
 	public int GoldCarried = 0;
 	private Miner minerScript;
 	public bool moneyStolen = false;
-	private bool isFleeingState = false;
 
 	// To avoid obstacles
 	private Vector3 dir;
@@ -91,23 +90,20 @@ public class Thief : MonoBehaviour {
 	}
 
 	// Enable evasion behaviour and disable wandering behaviour
-	public void enableEvasion() { 
-		disableWandering ();
-		disableSteering ();
+	public void enableEvasion(){ 
+		setTargetEvasion ();
 		thiefEvasion.enabled = true;
-		animator.SetInteger("speed", 2);
-		isFleeingState = true;
+		animator.SetInteger ("speed", 2);
 	}
-	
+
 	// Disable evasion behaviour and enable Idle animator
 	public void disableEvasion() {
 		thiefEvasion.enabled = false;
-		isFleeingState = false;
 	}
 
 	// Check if thief is fleeing
 	public bool isFleeing() {
-		return isFleeingState;
+		return thiefEvasion.enabled;
 	}
 	
 	// Enable wander behaviour and disable Idle animator

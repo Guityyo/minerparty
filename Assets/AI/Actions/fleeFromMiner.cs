@@ -19,7 +19,7 @@ public class fleeFromMiner : RAINAction
     {
 		thiefScript.enableEvasion();
         return ActionResult.SUCCESS;
-    }
+	}
 
     public override void Stop(RAIN.Core.AI ai)
     {

@@ -18,7 +18,7 @@ public sealed class VisitTreeToPee :  FSMState<Miner> {
 	}
 	
 	public override void Execute (Miner m) {
-		if (m.IsNearTarget (1)){
+		if (m.IsNearTarget (3)){
 			m.say("Oooh, that feels good!!");
 			m.disableSteering();
 			m.BathroomNeed -= 20;
