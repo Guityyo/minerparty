@@ -92,6 +92,7 @@ public class Thief : MonoBehaviour {
 	// Enable evasion behaviour and disable wandering behaviour
 	public void enableEvasion(){ 
 		setTargetEvasion ();
+		thiefWander.enabled = true;
 		thiefEvasion.enabled = true;
 		animator.SetInteger ("speed", 2);
 	}
